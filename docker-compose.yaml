@@ -1,0 +1,12 @@
+version: "3.2"
+
+services: 
+  redis:
+    image: redis
+
+  hubot:
+    image: linuxbandit/hubot
+    restart: on-failure
+    environment: 
+      REDIS_URL: redis
+      HUBOT_SLACK_TOKEN: ${HUBOT_SLACK_TOKEN}
