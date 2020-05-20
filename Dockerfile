@@ -1,4 +1,4 @@
-FROM node:14.2
+FROM node:14.2 AS builder
 
 ARG OWNER="fabrizio <bellicaf@tcd.ie>"
 ARG BOT_NAME="myhubot"
@@ -18,7 +18,17 @@ RUN npm install -g yo generator-hubot \
             --description="${DESCRIPTION}" \
             --adapter="slack"
 
+
+FROM node:14.2-alpine AS prod
+
+RUN addgroup -S hubot && adduser -S hubot -G hubot
+
+USER hubot
+
+WORKDIR /home/hubot
+
 COPY --chown=hubot ./scripts /home/hubot/scripts
 COPY --chown=hubot ./entrypoint.sh /home/hubot/entrypoint.sh
+COPY --from=builder --chown=hubot /home/hubot/ /home/hubot/
 
 ENTRYPOINT ["/home/hubot/entrypoint.sh"]
