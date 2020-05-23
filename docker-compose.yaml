@@ -10,4 +10,5 @@ services:
     environment: 
       REDIS_URL: redis
       HUBOT_SLACK_TOKEN: ${HUBOT_SLACK_TOKEN}
-      #EXTRA_PACKAGES: ""
+      EXTRA_PACKAGES: "hubot-auth"
+      HUBOT_AUTH_ADMIN: "U42J1D214"
