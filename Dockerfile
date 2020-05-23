@@ -13,7 +13,7 @@ USER hubot
 
 WORKDIR /home/hubot
 
-RUN npm install -g yo generator-hubot \
+RUN npm install -g yo generator-hubot@latest \
       && yo hubot --owner="${OWNER}" \
             --name="${BOT_NAME}" \
             --description="${DESCRIPTION}" \
@@ -27,7 +27,8 @@ RUN jq --arg HUBOT_VERSION "$HUBOT_VERSION" '.dependencies.hubot = $HUBOT_VERSIO
 
 FROM node:14.2-alpine AS prod
 
-RUN addgroup -S hubot && adduser -S hubot -G hubot
+RUN addgroup -S hubot && adduser -S hubot -G hubot \
+      && apk update && apk add --no-cache jq
 
 USER hubot
 
