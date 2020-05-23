@@ -1,0 +1,8 @@
+version: "3.2"
+
+services: 
+
+  hubot:
+    volumes:
+      - "${PATH_HUBOT}:/home/hubot/scripts:ro"
+

@@ -5,7 +5,7 @@ services:
     image: redis
 
   hubot:
-    image: linuxbandit/hubot
+    image: aegee/hubot
     restart: on-failure
     environment: 
       REDIS_URL: redis
