@@ -36,6 +36,6 @@ WORKDIR /home/hubot
 
 COPY --from=builder --chown=hubot /home/hubot/ /home/hubot/
 COPY --chown=hubot ./scripts /home/hubot/scripts
-COPY --chown=hubot ./entrypoint.sh /home/hubot/entrypoint.sh
+COPY --chown=hubot ./docker/entrypoint.sh /home/hubot/entrypoint.sh
 
 ENTRYPOINT ["/home/hubot/entrypoint.sh"]
