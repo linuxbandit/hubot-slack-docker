@@ -3,20 +3,22 @@
 #echo "${HUBOT_SLACK_TOKEN}" #or whatever troubleshooting command you may want
 
 # from the repo mentioned in README
-if [ -n "$EXTRA_PACKAGES" ]; then
+if [ -n "${EXTRA_PACKAGES}" ]; then
   printf "\\n********* Installing extra packages *********\\n"
   npm install --save ${EXTRA_PACKAGES//,/ }
 fi
 
-#jq -r --arg EXTRA_PACKAGES "${EXTRA_PACKAGES//,/ }" '. += ["$EXTRA_PACKAGES"]' ./external-scripts.json > /tmp/external-scripts.json
-
-#hardcode the one, for now
-jq -r '. += ["hubot-auth"]' ./external-scripts.json > /tmp/external-scripts.json
-mv /tmp/external-scripts.json  ./external-scripts.json
-
 printf "\\n********* Installing packages from external-scripts.json *********\\n"
+if [ ! -f "./external-scripts.json" ]; then
+  touch ./external-scripts.json
+fi
 npm install --save $(jq -r '.[]' ./external-scripts.json | paste -sd" " -)
 
+HUBOT_VERSION=$(jq -r '.dependencies.hubot' package.json)
+
+printf "\\n****************** Starting %s (Hubot %s) ******************\\n" "${HUBOT_NAME}" "${HUBOT_VERSION}"
+
+# whatever other troubleshooting
 # ls *.json | grep -v lock
 cat external-scripts.json hubot-scripts.json package.json
 
