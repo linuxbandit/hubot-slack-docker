@@ -15,11 +15,10 @@
 module.exports = (robot) ->
   robot.hear /what is the status of (frontend|core|events|statutory|discounts|mailer)/i, (res) ->
       
-      service = 'oms-' + res.match[1]
-      if res.match[1] is 'core'
-        service = service + '-elixir'
+      service = res.match[1]
+      base_url = "https://my.aegee.eu/api"
 
-      robot.http("https://my.aegee.eu/services/#{service}/api/healthcheck")
+      robot.http(base_url + "/#{service}/healthcheck")
       .header('Accept', 'application/json')
       .get() (err, response, body) ->
         # err & response status checking code here
