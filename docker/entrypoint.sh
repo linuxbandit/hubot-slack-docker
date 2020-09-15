@@ -12,6 +12,9 @@ printf "\\n********* Installing packages from external-scripts.json *********\\n
 if [ ! -f "./external-scripts.json" ]; then
   touch ./external-scripts.json
 fi
+cat ./external-scripts.json | sed '/heroku/d' | sed '/rules/d' > /tmp/exscr.json
+mv /tmp/exscr.json external-scripts.json
+
 npm install --save $(jq -r '.[]' ./external-scripts.json | paste -sd" " -)
 
 HUBOT_VERSION=$(jq -r '.dependencies.hubot' package.json)
