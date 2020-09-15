@@ -35,5 +35,6 @@ module.exports = (robot) ->
             health = 'HEALTHY'
           res.send "Service #{service} is #{health}"
         catch error
+          robot.logger.info error
           res.send "Ran into an error parsing JSON :("
           return
