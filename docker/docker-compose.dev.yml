@@ -4,5 +4,5 @@ services:
 
   hubot:
     volumes:
-      - "${PATH_HUBOT}:/home/hubot/scripts:ro"
+      - "./${PATH_HUBOT}/../scripts:/home/hubot/scripts:ro"
 

@@ -10,5 +10,11 @@ services:
     environment: 
       REDIS_URL: redis
       HUBOT_SLACK_TOKEN: ${HUBOT_SLACK_TOKEN}
-      EXTRA_PACKAGES: "hubot-auth,hubot-redis-brain,hubot-troubleshooting"
+      EXTRA_PACKAGES: "hubot-auth,hubot-redis-brain,node-ssh"
       HUBOT_AUTH_ADMIN: "U42J1D214"
+      PRODUCTION_HOST: ${PRODUCTION_HOST}
+      PRODUCTION_PORT: ${PRODUCTION_PORT}
+      PRODUCTION_USER: ${PRODUCTION_USER}
+      PRODUCTION_PATH: ${PRODUCTION_PATH}
+    volumes:
+      - "./${PATH_HUBOT}/../../secrets/ssh.key:/home/hubot/ssh.key:ro"
