@@ -22,7 +22,7 @@ RUN npm install -g yo generator-hubot@latest \
 
 ARG HUBOT_VERSION="3.3.2"
 
-RUN jq --arg HUBOT_VERSION "$HUBOT_VERSION" '.dependencies.hubot = $HUBOT_VERSION' package.json > /tmp/package.json\
+RUN jq --arg HUBOT_VERSION "$HUBOT_VERSION" '.dependencies.hubot = $HUBOT_VERSION' package.json > /tmp/package.json \
       && mv /tmp/package.json .
 
 FROM node:14.2-alpine AS prod
@@ -37,5 +37,6 @@ WORKDIR /home/hubot
 COPY --from=builder --chown=hubot /home/hubot/ /home/hubot/
 COPY --chown=hubot ./scripts /home/hubot/scripts
 COPY --chown=hubot ./docker/entrypoint.sh /home/hubot/entrypoint.sh
+COPY --chown=hubot ./external-scripts.json /home/hubot/external-scripts.json
 
 ENTRYPOINT ["/home/hubot/entrypoint.sh"]

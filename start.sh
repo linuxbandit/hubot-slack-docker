@@ -4,7 +4,11 @@ if [ ! -f .env ]; then
   exit 1
 fi
 
-export "$(grep -v '^#' .env | xargs -d '\n')"
+if [[ $(uname) == "Linux" ]]; then
+  export "$(grep -v '^#' .env | xargs -d '\n')"
+else #macos
+  export "$(grep -v '^#' .env | gxargs -d '\n')"
+fi
 
 if [ "${1}" == "build" ]; then
   docker build -t linuxbandit/hubot \

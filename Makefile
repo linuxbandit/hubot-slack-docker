@@ -5,3 +5,6 @@ start: build
 
 build:
 	./start.sh build
+
+monitor: start
+	./start.sh watch
