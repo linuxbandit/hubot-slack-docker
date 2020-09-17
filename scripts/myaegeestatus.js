@@ -15,13 +15,14 @@
 // Author:
 //   https://github.com/linuxbandit
 
-module.exports = (robot) =>
+module.exports = (robot) => {
   robot.hear(/what is the status of (frontend|core|events|statutory|discounts|mailer)/i, (res) => {
       
-      service = res.match[1]
-      base_url = "https://my.aegee.eu/api"
+      const service = res.match[1]
+      const base_url = "https://my.aegee.eu"
+      const path = (service === "frontend" ? "/healthcheck" : `/api/${service}/healthcheck`)
 
-      robot.http(base_url + `/${service}/healthcheck`)
+      robot.http(base_url + path)
       .header('Accept', 'application/json')
       .get() ( (err, response, body) => {
 
@@ -31,10 +32,10 @@ module.exports = (robot) =>
           return res.send("An error occurred, or the answer was not JSON :(")
         }
 
-        data = null
+        let data = null
         try{
           data = JSON.parse(body)
-          health = ':warning: UNHEALTHY :warning:'
+          let health = ':warning: UNHEALTHY :warning:'
           if(data.success)
             health = 'HEALTHY :ok:'
           return res.send(`Service ${service} is ${health}`)
@@ -45,3 +46,5 @@ module.exports = (robot) =>
         }
       })
   })
+
+}
