@@ -23,11 +23,11 @@ module.exports = (robot) => {
       const path = (service === "frontend" ? "/healthcheck" : `/api/${service}/healthcheck`)
 
       robot.http(base_url + path)
-      .header('Accept', 'application/json')
-      .get() ( (err, response, body) => {
+        .header('Accept', 'application/json')
+        .get() ( (err, response, body) => {
 
         // err & response status checking code here
-        if (err != null || response.headers['content-type'].indexOf('application/json') === -1){
+        if (err != null || response.headers['content-type'].indexOf('application/json') === -1) {
           robot.logger.error(err)
           return res.send("An error occurred, or the answer was not JSON :(")
         }
@@ -36,13 +36,13 @@ module.exports = (robot) => {
         try{
           data = JSON.parse(body)
           let health = ':warning: UNHEALTHY :warning:'
-          if(data.success)
+          if (data.success) {
             health = 'HEALTHY :ok:'
+          }
           return res.send(`Service ${service} is ${health}`)
-        }
-        catch (error) {
-          robot.logger.error(error)
-          return res.send("Ran into an error parsing JSON :(")
+        } catch (error) {
+            robot.logger.error(error)
+            return res.send("Ran into an error parsing JSON :(")
         }
       })
   })
