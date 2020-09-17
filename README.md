@@ -7,6 +7,7 @@ I wanted one solution where I could commit the scripts instead of publishing the
 ### Usage
 
 - Add your own scripts to the `scripts` folder
+- Set your wanted external scripts in `external-scripts.json`
 - Set `.env` file accordingly
 - `make`
 - ???

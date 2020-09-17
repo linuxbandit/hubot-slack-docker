@@ -9,14 +9,6 @@ if [ -n "${EXTRA_PACKAGES}" ]; then
 fi
 
 printf "\\n********* Installing packages from external-scripts.json *********\\n"
-if [ ! -f "./external-scripts.json" ]; then
-  echo '[]' > ./external-scripts.json
-fi
-
-#clean from bullshit
-#echo '[ "hubot-slack", "hubot-auth", "hubot-redis-brain", "hubot-help", "hubot-diagnostics", "hubot-pugme", "hubot-maps", "hubot-shipit" ]' > ./external-scripts.json
-#echo '[]' > ./external-scripts.json
-
 npm install --save $(jq -r '.[]' ./external-scripts.json | paste -sd" " -)
 
 HUBOT_VERSION=$(jq -r '.dependencies.hubot' package.json)
