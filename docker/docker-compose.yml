@@ -11,7 +11,7 @@ services:
     environment: 
       REDIS_URL: redis
       HUBOT_SLACK_TOKEN: ${HUBOT_SLACK_TOKEN}
-      #EXTRA_PACKAGES: "hubot-auth,hubot-redis-brain"
+      EXTRA_PACKAGES: "node-ssh"
       HUBOT_AUTH_ADMIN: "U42J1D214"
       PRODUCTION_HOST: ${PRODUCTION_HOST}
       PRODUCTION_PORT: ${PRODUCTION_PORT}
