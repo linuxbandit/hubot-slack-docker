@@ -2,13 +2,13 @@
 //   deploy script
 //
 // Dependencies:
-//   None
+//   node-ssh, hubot-auth
 //
 // Configuration:
 //   None
 //
 // Commands:
-//   hubot deploy <service> to <environment> - deploys <service> to <environment>
+//   hubot deploy (frontend|core|events|statutory|discounts|mailer) to <environment> - deploys <service> to <environment>
 //
 // Author:
 //   https://github.com/serge1peshcoff
@@ -16,6 +16,8 @@
 const { NodeSSH } = require('node-ssh');
 const path = require('path');
 const fs = require('fs');
+
+const allowedServices = ["frontend", "core", "events", "statutory", "discounts", "mailer"];
 
 module.exports = (robot) => {
     robot.hear(/deploy (.*) to (.*)/i, async (msg) => {
@@ -34,6 +36,10 @@ module.exports = (robot) => {
         if (environment !== 'production') {
             return msg.reply(`Unknown environment: "${environment}". Allowed environments: "production".`)
         }
+
+        if (!allowedServices.includes(service)) {
+            return msg.reply(`Unknown service: "${service}". Allowed services: "${allowedServices.join('", "')}".`);
+        }
         
         const ssh = new NodeSSH();
 
@@ -50,7 +56,7 @@ module.exports = (robot) => {
             return msg.reply(`Could not establish SSH connection: ${err}`);
         }
 
-        msg.reply(`The deploy of the Docker image for "${service}" is started.`);
+        msg.reply(`The deploy of the Docker image for \`${service}\` is started.`);
 
         try {
             const result = await ssh.execCommand(`./helper.sh --pull ${service}`, { cwd: process.env.PRODUCTION_PATH });
@@ -58,10 +64,10 @@ module.exports = (robot) => {
             console.log('STDERR: ' + result.stderr);
         } catch (err) {
             robot.logger.error(err)
-            return msg.reply(`Could not download Docker image for "${service}": ${err}`);
+            return msg.reply(`Could not download Docker image for \`${service}\`: ${err}`);
         }
 
-        msg.reply(`Docker image for "${service}" is pulled successfully.`);
+        msg.reply(`Docker image for \`${service}\` is pulled successfully.`);
 
         try {
             const result = await ssh.execCommand(`./helper.sh --start ${service}`, { cwd: process.env.PRODUCTION_PATH });
@@ -69,9 +75,9 @@ module.exports = (robot) => {
             console.log('STDERR: ' + result.stderr);
         } catch (err) {
             robot.logger.error(err)
-            return msg.reply(`Could not start service "${service}": ${err}`);
+            return msg.reply(`Could not start service \`${service}\`: ${err}`);
         }
 
-        msg.reply(`The Docker image for "${service}" is deployed to ${environment}.`);
+        msg.reply(`The Docker image for \`${service}\` is deployed to ${environment}.`);
     });
 };
