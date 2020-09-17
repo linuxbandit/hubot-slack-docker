@@ -32,12 +32,9 @@ module.exports = (robot) => {
           return res.send("An error occurred, or the answer was not JSON :(")
         }
 
-        try{
+        try {
           const data = JSON.parse(body)
-          let health = ':warning: UNHEALTHY :warning:'
-          if (data.success) {
-            health = 'HEALTHY :ok:'
-          }
+          let health = data.success ? 'HEALTHY :ok:' : ':warning: UNHEALTHY :warning:'
           return res.send(`Service ${service} is ${health}`)
         } catch (error) {
             robot.logger.error(error)
