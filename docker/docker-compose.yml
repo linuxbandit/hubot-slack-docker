@@ -2,15 +2,16 @@ version: "3.4"
 
 services: 
   redis:
-    image: redis
+    image: redis:6
+    restart: on-failure
 
   hubot:
-    image: aegee/hubot
+    image: aegee/hubot:latest
     restart: on-failure
     environment: 
       REDIS_URL: redis
       HUBOT_SLACK_TOKEN: ${HUBOT_SLACK_TOKEN}
-      EXTRA_PACKAGES: "hubot-auth,hubot-redis-brain,node-ssh"
+      #EXTRA_PACKAGES: "hubot-auth,hubot-redis-brain"
       HUBOT_AUTH_ADMIN: "U42J1D214"
       PRODUCTION_HOST: ${PRODUCTION_HOST}
       PRODUCTION_PORT: ${PRODUCTION_PORT}
