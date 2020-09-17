@@ -7,7 +7,8 @@ I wanted one solution where I could commit the scripts instead of publishing the
 ### Usage
 
 - Add your own scripts to the `scripts` folder
-- Set your wanted external scripts in `external-scripts.json`
+- Set your wanted external *hubot* scripts in `external-scripts.json`
+- Set your needed node libraries in the `EXTRA_PACKAGES` variable on `docker-compose.yml`
 - Set `.env` file accordingly
 - `make`
 - ???

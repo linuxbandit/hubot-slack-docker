@@ -3,7 +3,9 @@ version: "3.4"
 services: 
 
   hubot:
+    build:
+      context: ./${PATH_HUBOT}/..
+      dockerfile: ./docker/Dockerfile
     image: aegee/hubot:dev
     volumes:
-      - "./${PATH_HUBOT}/../scripts/:/home/hubot/scripts:ro"
-
+      - "./${PATH_HUBOT}/../scripts:/home/hubot/scripts:ro"
