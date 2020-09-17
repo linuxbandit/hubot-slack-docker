@@ -1,3 +1,18 @@
+// Description:
+//   deploy script
+//
+// Dependencies:
+//   None
+//
+// Configuration:
+//   None
+//
+// Commands:
+//   hubot deploy <service> to <environment> - deploys <service> to <environment>
+//
+// Author:
+//   https://github.com/serge1peshcoff
+
 const { NodeSSH } = require('node-ssh');
 const path = require('path');
 const fs = require('fs');
@@ -35,6 +50,8 @@ module.exports = (robot) => {
             return msg.reply(`Could not establish SSH connection: ${err}`);
         }
 
+        msg.reply(`The deploy of the Docker image for "${service}" is started.`);
+
         try {
             const result = await ssh.execCommand(`./helper.sh --pull ${service}`, { cwd: process.env.PRODUCTION_PATH });
             console.log('STDOUT: ' + result.stdout);
@@ -55,6 +72,6 @@ module.exports = (robot) => {
             return msg.reply(`Could not start service "${service}": ${err}`);
         }
 
-        msg.reply(`The docker image for "${service}" is deployed to ${environment}.`);
+        msg.reply(`The Docker image for "${service}" is deployed to ${environment}.`);
     });
 };
