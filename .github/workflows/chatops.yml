@@ -1,0 +1,15 @@
+name: ChatOps
+
+on:
+  repository_dispatch: 
+    types: [chatops-service]
+
+jobs:
+  validate:
+    name: Validate
+    if: ${{ github.event.client_payload.validate }}
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          MESSAGE: ${{ github.event.client_payload.message }}
+        run: echo $MESSAGE

@@ -1,4 +1,4 @@
-FROM node:14.2 AS builder
+FROM node:lts-slim AS builder
 
 ARG OWNER="fabrizio <bellicaf@tcd.ie>"
 ARG BOT_NAME="myhubot"
@@ -25,7 +25,7 @@ ARG HUBOT_VERSION="3.3.2"
 RUN jq --arg HUBOT_VERSION "$HUBOT_VERSION" '.dependencies.hubot = $HUBOT_VERSION' package.json > /tmp/package.json\
       && mv /tmp/package.json .
 
-FROM node:14.2-alpine AS prod
+FROM node:lts-alpine AS prod
 
 RUN addgroup -S hubot && adduser -S hubot -G hubot \
       && apk update && apk add --no-cache jq
