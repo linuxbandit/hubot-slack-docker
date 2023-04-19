@@ -1,8 +1,8 @@
-name: ChatOps
+name: deploy
 
 on:
   repository_dispatch: 
-    types: [chatops-service]
+    types: [deploy-service]
 
 jobs:
   validate:

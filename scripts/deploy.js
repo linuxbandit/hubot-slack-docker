@@ -42,7 +42,7 @@ if(!validateCommand(bot,username,service,branch,environment)) {
       // This is the same manual workflow triggering code converted 
       // from curl to actual javascript post request
       const data = await axios.post(`https://api.github.com/repos/JosiahSiegel/hubot-slack-docker/dispatches`,{
-        'event_type': 'chatops-service',
+        'event_type': 'deploy-service',
         'client_payload': {'validate': true, 'message': "Hello!", 'environment': environment, 'ref': branch}
       },{headers:{
       Authorization: `token ${token}`,
