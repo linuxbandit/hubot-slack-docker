@@ -6,7 +6,9 @@ if [ ! -f .env ]; then
 fi
 
 #export "$(grep -v '^#' .env | xargs -d '\n')"
-export $(xargs <.env)
+set -o allexport
+source .env
+set +o allexport
 
 if [ "${1}" == "build" ]; then
   docker build -t linuxbandit/hubot \

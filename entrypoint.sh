@@ -11,7 +11,7 @@ fi
 #jq -r --arg EXTRA_PACKAGES "${EXTRA_PACKAGES//,/ }" '. += ["$EXTRA_PACKAGES"]' ./external-scripts.json > /tmp/external-scripts.json
 
 #hardcode the one, for now
-jq -r '. += ["hubot-auth"]' ./external-scripts.json > /tmp/external-scripts.json
+jq -r '. += ["hubot-auth","hubot-github-deployments"]' ./external-scripts.json > /tmp/external-scripts.json
 mv /tmp/external-scripts.json  ./external-scripts.json
 
 printf "\\n********* Installing packages from external-scripts.json *********\\n"

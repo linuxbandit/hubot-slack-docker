@@ -1,13 +1,12 @@
-name: deploy
+name: deploy 
 
 on:
   repository_dispatch: 
     types: [deploy-service]
 
 jobs:
-  validate:
-    name: Validate
-    if: ${{ github.event.client_payload.validate }}
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
       - env:
