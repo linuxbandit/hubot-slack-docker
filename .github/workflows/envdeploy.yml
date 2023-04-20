@@ -1,0 +1,14 @@
+name: Env Deployment
+
+on:
+  push:
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    environment: 
+      name: staging
+      url: https://github.com
+    steps:
+      - name: deploy
+        run: echo 1
