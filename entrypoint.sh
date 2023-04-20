@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #echo "${HUBOT_SLACK_TOKEN}" #or whatever troubleshooting command you may want
-
+echo "${HUBOT_GITHUB_DEPLOY_TARGETS}"
 # from the repo mentioned in README
 if [ -n "$EXTRA_PACKAGES" ]; then
   printf "\\n********* Installing extra packages *********\\n"

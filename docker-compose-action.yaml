@@ -1,0 +1,16 @@
+version: "3.2"
+
+services:
+  hubot:
+    image: linuxbandit/hubot
+    restart: on-failure
+    environment:
+      EXTRA_PACKAGES: ${EXTRA_PACKAGES}
+      OWNER: ${OWNER}
+      BOT_NAME: devbot
+      DESCRIPTION: "A bot"
+      HUBOT_SLACK_TOKEN: ${HUBOT_SLACK_TOKEN}
+      HUBOT_GITHUB_TOKEN: ${HUBOT_GITHUB_TOKEN}
+      HUBOT_GITHUB_USER: ${HUBOT_GITHUB_USER}
+      HUBOT_GITHUB_DEPLOY_TARGETS: ${HUBOT_GITHUB_DEPLOY_TARGETS}
+      HUBOT_GITHUB_REPO: ${HUBOT_GITHUB_REPO}
